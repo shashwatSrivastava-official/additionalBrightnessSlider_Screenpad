@@ -19,7 +19,7 @@
 /* exported init */
 "use strict";
 
-const { St, Clutter, Gio, GLib } = imports.gi;
+const { St, Clutter, Gio, GLib, GObject } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
