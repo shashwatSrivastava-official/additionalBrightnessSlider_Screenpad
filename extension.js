@@ -39,9 +39,9 @@ var BrightnessIndicator = GObject.registerClass(
       this._sliderItem = new PopupMenu.PopupBaseMenuItem({ activate: false });
       this._slider = new Slider.Slider(0);
       this._slider.connect("notify::value", this._sliderChanged.bind(this));
-      this._sliderItem.add(this._slider);
       this.menu.addMenuItem(this._sliderItem);
       this._sliderItem.add(icon);
+      this._sliderItem.add_child(this._slider);
 
       this._updateBrightness();
     }
