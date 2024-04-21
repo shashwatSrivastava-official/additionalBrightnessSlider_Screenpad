@@ -24,7 +24,6 @@ const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 const ExtensionUtils = imports.misc.extensionUtils;
-const Util = imports.misc.util;
 const Slider = imports.ui.slider;
 
 var BrightnessIndicator = GObject.registerClass(
@@ -52,7 +51,7 @@ var BrightnessIndicator = GObject.registerClass(
 
     _updateBrightness() {
       // Command to get the current brightness
-      Util.spawnCommandLineAsyncIO(
+      GLib.spawn_command_line_sync(
         "brightnessctl -d DP-1 get",
         (stdout, stderr) => {
           if (stderr !== "") {
@@ -80,7 +79,9 @@ var BrightnessIndicator = GObject.registerClass(
     _sliderChanged() {
       const maxBrightness = this._getMaxBrightness();
       const brightnessValue = Math.round(this._slider.value * maxBrightness);
-      Util.spawnCommandLine(`brightnessctl -d DP-1 set ${brightnessValue}%`);
+      GLib.spawn_command_line_sync(
+        `brightnessctl -d DP-1 set ${brightnessValue}%`
+      );
     }
   }
 );
