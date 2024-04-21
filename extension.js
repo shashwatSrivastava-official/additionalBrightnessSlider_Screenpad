@@ -50,19 +50,16 @@ var BrightnessIndicator = GObject.registerClass(
     }
 
     _updateBrightness() {
-      // Command to get the current brightness
-      GLib.spawn_command_line_sync(
-        "brightnessctl -d DP-1 get",
-        (stdout, stderr) => {
-          if (stderr !== "") {
-            log(`Error reading brightness: ${stderr}`);
-            return;
-          }
-          const maxBrightness = this._getMaxBrightness();
-          const currentBrightness = parseInt(stdout);
-          this._slider.setValue(currentBrightness / maxBrightness);
-        }
+      let [result, stdout, stderr] = GLib.spawn_command_line_sync(
+        "brightnessctl -d DP-1 get"
       );
+      if (!result) {
+        log(`Error reading brightness: ${stderr.toString()}`);
+        return;
+      }
+      const maxBrightness = this._getMaxBrightness();
+      const currentBrightness = parseInt(stdout.toString().trim());
+      this._sliderItem.setValue(currentBrightness / maxBrightness);
     }
 
     _getMaxBrightness() {
