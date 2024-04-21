@@ -23,7 +23,6 @@ const { St, Clutter, Gio, GLib, GObject } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
-const ExtensionUtils = imports.misc.extensionUtils;
 const Slider = imports.ui.slider;
 
 var BrightnessIndicator = GObject.registerClass(
@@ -38,13 +37,12 @@ var BrightnessIndicator = GObject.registerClass(
 
       this.add_child(icon);
 
-      // Create a custom slider item using Slider.Slider
+      // Define _sliderItem as a property of this object
+      this._sliderItem = new PopupMenu.PopupBaseMenuItem({ activate: false });
       this._slider = new Slider.Slider(0.5);
       this._slider.connect("notify::value", this._sliderChanged.bind(this));
-
-      let sliderItem = new PopupMenu.PopupBaseMenuItem({ activate: false });
-      sliderItem.add(this._slider);
-      this.menu.addMenuItem(sliderItem);
+      this._sliderItem.add(this._slider);
+      this.menu.addMenuItem(this._sliderItem);
 
       this._updateBrightness();
     }
@@ -59,14 +57,14 @@ var BrightnessIndicator = GObject.registerClass(
       }
       const maxBrightness = this._getMaxBrightness();
       const currentBrightness = parseInt(stdout.toString().trim());
-      this._sliderItem.setValue(currentBrightness / maxBrightness);
+      this._slider.setValue(currentBrightness / maxBrightness); // Use _slider directly here
     }
 
     _getMaxBrightness() {
-      let [success, stdout, stderr] = GLib.spawn_command_line_sync(
+      let [result, stdout, stderr] = GLib.spawn_command_line_sync(
         "brightnessctl -d DP-1 max"
       );
-      if (!success) {
+      if (!result) {
         log(`Error getting max brightness: ${stderr}`);
         return 100; // Default to 100 if there is an error
       }
@@ -86,7 +84,9 @@ var BrightnessIndicator = GObject.registerClass(
 let brightnessIndicator;
 
 function init() {
-  log("Brightness control extension initializing");
+  log(
+    "---------------------------Brightness control extension initializing---------------------------"
+  );
 }
 
 function enable() {
