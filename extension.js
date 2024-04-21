@@ -28,7 +28,7 @@ const Slider = imports.ui.slider;
 var BrightnessIndicator = GObject.registerClass(
   class BrightnessIndicator extends PanelMenu.SystemIndicator {
     _init() {
-      super._init(0.0, _("Monitor Brightness"));
+      super._init();
 
       const icon = new St.Icon({
         icon_name: "display-brightness-symbolic",
