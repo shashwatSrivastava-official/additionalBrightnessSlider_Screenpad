@@ -57,7 +57,7 @@ var BrightnessIndicator = GObject.registerClass(
       }
       const maxBrightness = this._getMaxBrightness();
       const currentBrightness = parseInt(stdout.toString().trim());
-      this._slider.setValue(currentBrightness / maxBrightness); // Use _slider directly here
+      this._slider.set_value(currentBrightness / maxBrightness); // Use _slider directly here
     }
 
     _getMaxBrightness() {
