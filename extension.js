@@ -43,6 +43,7 @@ var BrightnessIndicator = GObject.registerClass(
       this._sliderItem.add(icon);
       this._sliderItem.add_child(this._slider);
 
+      this._maxBrightness = this._getMaxBrightness();
       this._updateBrightness();
     }
 
@@ -54,9 +55,8 @@ var BrightnessIndicator = GObject.registerClass(
         log(`Error reading brightness: ${stderr.toString()}`);
         return;
       }
-      const maxBrightness = this._getMaxBrightness();
       const currentBrightness = parseInt(stdout.toString().trim());
-      this._slider.value = currentBrightness / maxBrightness;
+      this._slider.value = currentBrightness / this._maxBrightness;
     }
 
     _getMaxBrightness() {
@@ -71,8 +71,9 @@ var BrightnessIndicator = GObject.registerClass(
     }
 
     _sliderChanged() {
-      const maxBrightness = this._getMaxBrightness();
-      const brightnessValue = Math.round(this._slider.value * maxBrightness);
+      const brightnessValue = Math.round(
+        this._slider.value * this._maxBrightness
+      );
       GLib.spawn_command_line_sync(
         `brightnessctl -d asus_screenpad set ${brightnessValue}%`
       );
