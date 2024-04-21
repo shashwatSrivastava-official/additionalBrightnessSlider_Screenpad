@@ -19,13 +19,13 @@
 /* exported init */
 "use strict";
 
-const { GObject, St, Clutter, Gio } = imports.gi;
+const { St, Clutter, Gio, GLib } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
-const Slider = imports.ui.slider;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Util = imports.misc.util;
+const Slider = imports.ui.slider;
 
 var BrightnessIndicator = GObject.registerClass(
   class BrightnessIndicator extends PanelMenu.Button {
@@ -39,14 +39,19 @@ var BrightnessIndicator = GObject.registerClass(
 
       this.add_child(icon);
 
-      this._sliderItem = new PopupMenu.PopupSliderMenuItem(0.5);
-      this._sliderItem.connect("value-changed", this._sliderChanged.bind(this));
-      this.menu.addMenuItem(this._sliderItem);
+      // Create a custom slider item using Slider.Slider
+      this._slider = new Slider.Slider(0.5);
+      this._slider.connect("notify::value", this._sliderChanged.bind(this));
+
+      let sliderItem = new PopupMenu.PopupBaseMenuItem({ activate: false });
+      sliderItem.add(this._slider);
+      this.menu.addMenuItem(sliderItem);
 
       this._updateBrightness();
     }
 
     _updateBrightness() {
+      // Command to get the current brightness
       Util.spawnCommandLineAsyncIO(
         "brightnessctl -d DP-1 get",
         (stdout, stderr) => {
@@ -56,7 +61,7 @@ var BrightnessIndicator = GObject.registerClass(
           }
           const maxBrightness = this._getMaxBrightness();
           const currentBrightness = parseInt(stdout);
-          this._sliderItem.setValue(currentBrightness / maxBrightness);
+          this._slider.setValue(currentBrightness / maxBrightness);
         }
       );
     }
@@ -72,15 +77,15 @@ var BrightnessIndicator = GObject.registerClass(
       return parseInt(stdout.toString().trim());
     }
 
-    _sliderChanged(slider, value) {
+    _sliderChanged() {
       const maxBrightness = this._getMaxBrightness();
-      const brightnessValue = Math.round(value * maxBrightness);
+      const brightnessValue = Math.round(this._slider.value * maxBrightness);
       Util.spawnCommandLine(`brightnessctl -d DP-1 set ${brightnessValue}%`);
     }
   }
 );
 
-var brightnessIndicator;
+let brightnessIndicator;
 
 function init() {
   log("Brightness control extension initializing");
