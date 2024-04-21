@@ -1,11 +1,8 @@
 {
-	"version": 1,
-	"name": "Additional Brightness Toggle Slider",
-	"description": "Allows to add a manual slider for a second screen for Laptop Muiltiple Laptop Displays",
-	"url": "",
-	"uuid": "additional-brightness-control",
-	"shell-version": [
-		"45",
-		"46"
-	]
+  "version": 1,
+  "name": "Additional Brightness Toggle Slider",
+  "description": "Allows to add a manual slider for a second screen for Laptop Muiltiple Laptop Displays",
+  "url": "",
+  "uuid": "additional-brightness-control",
+  "shell-version": ["41", "42", "43", "45", "46"]
 }
