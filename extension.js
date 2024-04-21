@@ -84,9 +84,9 @@ var BrightnessIndicator = GObject.registerClass(
 let brightnessIndicator;
 
 function init() {
-  log(
+/*  log(
     "---------------------------Brightness control extension initializing---------------------------"
-  );
+  ); */
 }
 
 function enable() {
