@@ -30,9 +30,9 @@ var BrightnessIndicator = GObject.registerClass(
     _init() {
       super._init();
 
-      const icon = new St.Icon({
-        icon_name: "display-brightness-symbolic",
-        style_class: "system-status-icon",
+      let icon = new St.Icon({
+        icon_name: "keyboard-brightness-symbolic",
+        style_class: "popup-menu-icon",
       });
 
       this.add_child(icon);
