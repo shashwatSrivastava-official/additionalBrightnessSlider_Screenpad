@@ -46,27 +46,40 @@ class BrightnessIndicator extends PanelMenu.Button {
     this._updateBrightness();
   }
 
-  _updateBrightness() {
-    Util.spawnCommandLine("brightnessctl -d DP-1 get", (stdout) => {
-      const maxBrightness = this._getMaxBrightness();
-      const currentBrightness = parseInt(stdout);
-      this._sliderItem.setValue(currentBrightness / maxBrightness);
-    });
+  _getMaxBrightness() {
+    let [success, stdout, stderr] = GLib.spawn_command_line_sync(
+      "brightnessctl -d DP-1 max"
+    );
+    if (!success) {
+      log(`Error getting max brightness: ${stderr}`);
+      return 100; // Default to 100 if there is an error
+    }
+    return parseInt(stdout.toString().trim());
   }
 
-  _getMaxBrightness() {
-    let stdout = Util.spawnCommandLineSync("brightnessctl -d DP-1 max");
-    return parseInt(stdout.toString().trim());
+  _updateBrightness() {
+    Util.spawnCommandLineAsyncIO(
+      "brightnessctl -d DP-1 get",
+      (stdout, stderr) => {
+        if (stderr !== "") {
+          log(`Error reading brightness: ${stderr}`);
+          return;
+        }
+        const maxBrightness = this._getMaxBrightness();
+        const currentBrightness = parseInt(stdout);
+        this._sliderItem.setValue(currentBrightness / maxBrightness);
+      }
+    );
   }
 
   _sliderChanged(slider, value) {
     const maxBrightness = this._getMaxBrightness();
     const brightnessValue = Math.round(value * maxBrightness);
-    Util.spawnCommandLine(`brightnessctl -d DP-1 set ${brightnessValue}`);
+    Util.spawnCommandLine(`brightnessctl -d DP-1 set ${brightnessValue}%`);
   }
 }
 
-let brightnessIndicator;
+var brightnessIndicator;
 
 function init() {
   log("Brightness control extension initializing");
@@ -74,7 +87,12 @@ function init() {
 
 function enable() {
   brightnessIndicator = new BrightnessIndicator();
-  Main.panel.statusArea.aggregateMenu.menu.addMenuItem(brightnessIndicator, 3);
+  Main.panel.addToStatusArea(
+    "brightness-indicator",
+    brightnessIndicator,
+    0,
+    "right"
+  );
 }
 
 function disable() {
