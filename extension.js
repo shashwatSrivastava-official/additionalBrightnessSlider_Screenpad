@@ -26,7 +26,7 @@ const PopupMenu = imports.ui.popupMenu;
 const Slider = imports.ui.slider;
 
 var BrightnessIndicator = GObject.registerClass(
-  class BrightnessIndicator extends PanelMenu.Button {
+  class BrightnessIndicator extends PanelMenu.SystemIndicator {
     _init() {
       super._init(0.0, _("Monitor Brightness"));
 
