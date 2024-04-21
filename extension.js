@@ -57,6 +57,9 @@ var BrightnessIndicator = GObject.registerClass(
       }
       const currentBrightness = parseInt(stdout.toString().trim());
       this._slider.value = currentBrightness / this._maxBrightness;
+      log(
+        `Current brightness: ${currentBrightness} / ${this._maxBrightness} = ${this._slider.value}`
+      );
     }
 
     _getMaxBrightness() {
@@ -74,6 +77,7 @@ var BrightnessIndicator = GObject.registerClass(
       const brightnessValue = Math.round(
         this._slider.value * this._maxBrightness
       );
+      log(`Adjusting brightness to ${brightnessValue}`);
       GLib.spawn_command_line_sync(
         `brightnessctl -d asus_screenpad set ${brightnessValue}%`
       );
