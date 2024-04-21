@@ -49,7 +49,7 @@ var BrightnessIndicator = GObject.registerClass(
 
     _updateBrightness() {
       let [result, stdout, stderr] = GLib.spawn_command_line_sync(
-        "brightnessctl -d DP-1 get"
+        "brightnessctl -d asus_screenpad get"
       );
       if (!result) {
         log(`Error reading brightness: ${stderr.toString()}`);
@@ -62,7 +62,7 @@ var BrightnessIndicator = GObject.registerClass(
 
     _getMaxBrightness() {
       let [result, stdout, stderr] = GLib.spawn_command_line_sync(
-        "brightnessctl -d DP-1 max"
+        "brightnessctl -d asus_screenpad max"
       );
       if (!result) {
         log(`Error getting max brightness: ${stderr}`);
@@ -75,7 +75,7 @@ var BrightnessIndicator = GObject.registerClass(
       const maxBrightness = this._getMaxBrightness();
       const brightnessValue = Math.round(this._slider.value * maxBrightness);
       GLib.spawn_command_line_sync(
-        `brightnessctl -d DP-1 set ${brightnessValue}%`
+        `brightnessctl -d asus_screenpad set ${brightnessValue}%`
       );
     }
   }
