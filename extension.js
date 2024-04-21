@@ -74,12 +74,7 @@ function init() {
 
 function enable() {
   brightnessIndicator = new BrightnessIndicator();
-  Main.panel.addToStatusArea(
-    "brightness-indicator",
-    brightnessIndicator,
-    1,
-    "right"
-  );
+  Main.panel.statusArea.aggregateMenu.menu.addMenuItem(brightnessIndicator, 3);
 }
 
 function disable() {
