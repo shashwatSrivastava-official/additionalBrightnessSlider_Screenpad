@@ -39,7 +39,7 @@ var BrightnessIndicator = GObject.registerClass(
 
       // Define _sliderItem as a property of this object
       this._sliderItem = new PopupMenu.PopupBaseMenuItem({ activate: false });
-      this._slider = new Slider.Slider(0.5);
+      this._slider = new Slider.Slider(0);
       this._slider.connect("notify::value", this._sliderChanged.bind(this));
       this._sliderItem.add(this._slider);
       this.menu.addMenuItem(this._sliderItem);
