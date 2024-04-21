@@ -92,7 +92,7 @@ function init() {
 function enable() {
   brightnessIndicator = new BrightnessIndicator();
   Main.panel.statusArea.aggregateMenu.menu.addMenuItem(
-    this.brightnessIndicator.menu,
+    brightnessIndicator.menu,
     3
   );
 }
