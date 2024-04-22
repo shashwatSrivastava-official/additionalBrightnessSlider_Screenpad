@@ -4,16 +4,11 @@ Compatible Device: Asus Zenbook Pro Duo 14 OLED
 
 ## Instructions:
   1. The repository uses [brightnessctl](https://github.com/Hummer12007/brightnessctl) and gnome-shell-extenstions libraries. Please ensure that the libraries are installed and functional.
-  2. Clone and move the git repo to ``` ~/.local/share/gnome-shell/extensions ```:
+  2. Clone the git repo:
      ```
      git clone https://github.com/shashwatSrivastava-official/additionalBrightnessToggle
-     mkdir ~/.local/share/gnome-shell/extensions/additional-brightness-control
-     mv additionalBrightnessToggle ~/.local/share/gnome-shell/extensions/additional-brightness-control
-     cd ~/.local/share/gnome-shell/extensions/additional-brightness-control
-     mv additionalBrightnessToggle/* .
-     rm additionalBrightnessToggle
      ```
-  3. Enable the 
+  3. 
 ## Scope for Improvements:
   1. Further adding support for multiple screens and making the code block more modular and generalized.
   2. Keymapping for secondary or multiple monitors for shortcut brightness toggling.
