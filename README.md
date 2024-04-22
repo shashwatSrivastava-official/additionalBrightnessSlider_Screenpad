@@ -8,7 +8,9 @@ Compatible Device: Asus Zenbook Pro Duo 14 OLED
      ```
      git clone https://github.com/shashwatSrivastava-official/additionalBrightnessToggle
      ```
-  3. 
+  3. Make the setup.sh command executable, ``` sudo chmod +x setup.sh ``` and run the setup.sh command, ``` . setup.sh ```.
+  4. Run the GNOME-Extensions and enable the additional-brightness-control module.
+
 ## Scope for Improvements:
   1. Further adding support for multiple screens and making the code block more modular and generalized.
   2. Keymapping for secondary or multiple monitors for shortcut brightness toggling.
