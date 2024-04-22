@@ -6,7 +6,7 @@ Compatible Device: Asus Zenbook Pro Duo 14 OLED
   1. The repository uses [brightnessctl](https://github.com/Hummer12007/brightnessctl) and gnome-shell-extenstions libraries. Please ensure that the libraries are installed and functional.
   2. Clone the git repo:
      ```
-     git clone https://github.com/shashwatSrivastava-official/additionalBrightnessToggle
+     git clone https://github.com/shashwatSrivastava-official/additionalBrightnessSlider_Screenpad
      ```
   3. Make the setup.sh command executable, ``` sudo chmod +x setup.sh ``` and run the setup.sh command, ``` . setup.sh ```.
   4. Run the GNOME-Extensions and enable the additional-brightness-control module.
