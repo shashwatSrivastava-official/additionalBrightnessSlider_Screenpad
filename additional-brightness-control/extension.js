@@ -78,13 +78,24 @@ var BrightnessIndicator = GObject.registerClass(
         `brightnessctl -d asus_screenpad set ${brightnessValue}`
       );
     }
+    _changeSlider(value) {
+      this._slider.block_signal_handler(this._sliderChangedId);
+      this._slider.value = value;
+      this._slider.unblock_signal_handler(this._sliderChangedId);
+    }
+
+    destroy() {
+      if (this.changeSliderTimeout) clearTimeout(this.changeSliderTimeout);
+      this.menu.destroy();
+      super.destroy();
+    }	  
   }
 );
 
 let brightnessIndicator;
 
 function init() {
-/*  log(
+/* log(
     "---------------------------Brightness control extension initializing---------------------------"
   ); */
 }
