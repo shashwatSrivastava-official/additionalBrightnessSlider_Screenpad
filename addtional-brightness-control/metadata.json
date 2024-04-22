@@ -1,8 +1,0 @@
-{
-  "version": 1,
-  "name": "Additional Brightness Toggle Slider",
-  "description": "Allows to add a manual slider for a second screen for Asus Zenbook Duo 14 Oled",
-  "url": "https://github.com/shashwatSrivastava-official/additionalBrightnessToggle/",
-  "uuid": "additional-brightness-control",
-  "shell-version": ["41", "42", "43", "45", "46"]
-}
