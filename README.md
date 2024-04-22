@@ -1,4 +1,4 @@
-# additionalBrightnessToggle
+# additionalBrightnessSlider_Screenpad
 GNOME Extension to implement additional brightness toggles in the Quick List using brightnessctl.
 Compatible Device: Asus Zenbook Pro Duo 14 OLED
 
